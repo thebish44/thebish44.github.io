@@ -1,7 +1,9 @@
+const audioHit = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/hit.mp3?raw=true");
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 const score = document.querySelector('#score');
+const song = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/molesong.mp3?raw=true");
 const timerDisplay = document.querySelector('#timer');
 
 let time = 0;
@@ -219,6 +221,7 @@ function whack(event) {
 function setEventListeners(){
   moles.forEach((mole) => {
     mole.addEventListener("click", (event) => {
+      playAudio(audioHit);
       whack(event);
     });
   });
@@ -243,7 +246,6 @@ function setDuration(duration) {
 *
 */
 function stopGame(){
-  // stopAudio(song);  //optional
   clearInterval(timer);
   return "game stopped";
 }
@@ -255,11 +257,22 @@ function stopGame(){
 *
 */
 function startGame(){
+  loopAudio(song);
+  clearScore();
   setEventListeners();
   setDuration(10);
   showUp();
   startTimer();
   return "game started";
+}
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
 }
 
 startButton.addEventListener("click", startGame);
